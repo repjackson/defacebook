@@ -18,7 +18,7 @@ Meteor.publish 'posts', ()->
     Docs.find {
         model:'post'
     },
-        limit:10
+        limit:30
         sort:
             _timestamp:-1
 

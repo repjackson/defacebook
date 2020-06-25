@@ -1,21 +1,21 @@
 if Meteor.isClient
-    Router.route '/doc/:doc_id/view', (->
+    Router.route '/post/:doc_id/view', (->
         @layout 'layout'
-        @render 'doc_page'
-        ), name:'doc_page'
+        @render 'post_page'
+        ), name:'post_page'
 
 
-    Template.doc_page.onCreated ->
+    Template.post_page.onCreated ->
         # @autorun => Meteor.subscribe('doc', Router.current().params.doc_id)
         # Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'current_doc', Router.current().params.doc_id
         console.log @
-    Template.doc_page.onRendered ->
+    Template.post_page.onRendered ->
         Meteor.setTimeout ->
             $('.ui.accordion').accordion()
         , 1000
 
-    Template.doc_page.events
+    Template.post_page.events
         'click .call_watson': ->
             Meteor.call 'call_watson', @_id, 'url', 'url'
         'click .call_watson_image': ->
@@ -90,16 +90,16 @@ if Meteor.isClient
 
 
 
-    Template.doc_page.onCreated ->
+    Template.post_page.onCreated ->
         @view_detail = new ReactiveVar false
         @autorun => @subscribe 'doc', Router.current().params.doc_id
 
-    Template.doc_page.onRendered ->
+    Template.post_page.onRendered ->
         Meteor.setTimeout ->
             $('.ui.embed').embed();
         , 1000
 
-    Template.doc_page.helpers
+    Template.post_page.helpers
         view_tone: -> Session.get('view_tone')
 
         when: -> moment(@_timestamp).fromNow()
@@ -141,7 +141,7 @@ if Meteor.isClient
                     'red'
                 else
                     'yellow'
-    Template.doc_page.events
+    Template.post_page.events
         'click .toggle_detail': (e,t)->
             t.view_detail.set !t.view_detail.get()
         'click .remove': ->

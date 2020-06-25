@@ -29,14 +29,15 @@ template(name='home')
                             .header 
                                 |pages
             .twelve.wide.column
-                .ui.segment
+                .ui.rounded.segment
                     .ui.header post
-                    .ui.big.circular.icon.button.add_post
-                        i.plus.icon
+                    //- .ui.big.circular.icon.button.add_post
+                    //-     i.plus.icon
                     .ui.fluid.big.input
                         input#add_post(type='text' placeholder='add...')
-                each posts
-                    .ui.header #{title}
+                .scrolling
+                    each posts
+                        +post_item
                     
 template(name='agg_tag')
     button.ui.tertiary.large.button.result(tabindex="0" title=count)

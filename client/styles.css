@@ -85,7 +85,7 @@ body {
 }
 
 .rounded {
-    /* border-radius: 5px !important; */
+    border-radius: 10px !important;
 }
 
 .sadness {
@@ -367,8 +367,9 @@ body {
     font-family: 'Ubuntu', sans-serif !important;
 }
 .segment, .input, .header, .button {
-  animation: fadein .5s;
+    animation: fadein .5s;
 }
+
 
 
 @keyframes fadein {

@@ -1,0 +1,9 @@
+template(name='post_item')
+    .ui.rounded.segment
+        a.ui.header(href="/post/#{_id}/view") #{title}
+        .meta
+            |#{when}
+            |#{_author_username}
+        if dev
+            .ui.circular.icon.button.delete_post
+                i.remove.icon

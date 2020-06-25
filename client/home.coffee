@@ -1,7 +1,5 @@
 @selected_tags = new ReactiveArray []
-@selected_subreddits = new ReactiveArray []
 @selected_authors = new ReactiveArray []
-@selected_domains = new ReactiveArray []
 @selected_emotions = new ReactiveArray []
 
 Template.admin.helpers
@@ -30,6 +28,8 @@ Template.home.onCreated ->
     #     selected_authors.array()
     #     selected_emotions.array()
     #     Session.get('date_setting')
+
+
 
 
 Template.home.events
