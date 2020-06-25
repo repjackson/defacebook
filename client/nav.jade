@@ -1,8 +1,8 @@
 template(name='nav')
     .ui.fluid.attached.borderless.inverted.big.blue.menu
-        .header.item
+        a.header.item(href="/")
             | d
-            .ui.header f
+            .ui.white.large.inverted.header f
             |b
             //- |efacebook
         .item 
@@ -15,12 +15,248 @@ template(name='nav')
         a.icon.item 
             i.users.icon
         .right.menu
-            a.icon.item
-                i.plus.icon
-            a.icon.item
-                i.chat.icon
-            a.icon.item
-                i.bell.icon
-            a.icon.item
-                i.user.icon
+            if currentUser
+                a.icon.item
+                    i.plus.icon
+                a.icon.item
+                    i.chat.icon
+                a.icon.item
+                    i.bell.icon
+                a.item(href="/user/#{currentUser.username}")
+                    i.user.icon
+                    |#{currentUser.username}
+            else
+                a.item(href="/login")
+                    i.sign.in.alternate.icon
+                    |login
+                
         
+template(name='bottom_nav')
+        if in_role 'admin'
+            .ui.bottom.fixed.menu
+                a.icon.item.go_home(href='/' class="{{isActivePath '/'}}" title='models')
+                    i.large.home.icon
+                a.icon.item.mobile.hidden(href='/users' class="{{isActivePath '/users'}}" title='users')
+                    i.large.users.icon
+        if in_role 'business'
+            .ui.bottom.fixed.six.item.menu.mobile.only
+                a.icon.item(href='/business_home' class="{{isActivePath '/business_home'}}" title='home')
+                    i.home.icon
+                a.icon.item(href='/business_clients' class="{{isActivePath '/business_clients'}}" title='clients')
+                    i.database.icon
+                a.icon.item(href='/business_onboarding' class="{{isActivePath '/business_onboarding'}}" title='onboarding')
+                    i.arrow.up.icon
+                a.icon.item(href='/mail' class="{{isActivePath '/mail'}}" title='mail')
+                    i.chat.icon
+                a.icon.item(href='/search' class="{{isActivePath '/search'}}" title='search')
+                    i.search.icon
+                a.icon.item(href='/business_profile' class="{{isActivePath '/business_profile'}}" title='search')
+                    i.user.outline.icon
+            .ui.bottom.fixed.six.item.labeled.icon.menu.mobile.hidden
+                a.item(href='/business_home' class="{{isActivePath '/business_home'}}" title='home')
+                    i.home.icon
+                    |home
+                a.item(href='/business_clients' class="{{isActivePath '/business_clients'}}" title='clients')
+                    i.database.icon
+                    | clients
+                a.item(href='/onboarding' class="{{isActivePath '/business_home'}}" title='home')
+                    i.arrow.up.icon
+                    | onboarding
+                a.item(href='/chat' class="{{isActivePath '/chat'}}" title='home')
+                    i.chat.icon
+                    | mail
+                a.item(href='/search' class="{{isActivePath '/search'}}" title='search')
+                    i.search.icon
+                    | search
+                a.item(href='/business_profile' class="{{isActivePath '/business_profile'}}" title='search')
+                    i.user.outline.icon
+                    | profile
+                
+        if in_role 'student'
+            .ui.bottom.fixed.six.item.menu.mobile.only
+                a.icon.item(href='/student_home' class="{{isActivePath '/student_home'}}" title='home')
+                    i.home.icon
+                a.icon.item(href='/student_schedule' class="{{isActivePath '/student_schedule'}}" title='clients')
+                    i.calendar.icon
+                a.icon.item(href='/student_tasks' class="{{isActivePath '/student_tasks'}}" title='tasks')
+                    i.arrow.up.icon
+                a.icon.item(href='/student_development' class="{{isActivePath '/student_development'}}" title='home')
+                    i.line.chart.icon
+                a.icon.item(href='/student_mail' class="{{isActivePath '/student_mail'}}" title='mail')
+                    i.chat.icon
+                a.icon.item(href='/student_profile' class="{{isActivePath '/student_profile'}}" title='profile')
+                    i.user.outline.icon
+            .ui.bottom.fixed.six.item.labeled.icon.menu.mobile.hidden
+                a.item(href='/student_home' class="{{isActivePath '/student_home'}}" title='home')
+                    i.home.icon
+                    | home
+                a.item(href='/student_schedule' class="{{isActivePath '/student_schedule'}}" title='clients')
+                    i.calendar.icon
+                    | schedule
+                a.item(href='/student_tasks' class="{{isActivePath '/student_tasks'}}" title='tasks')
+                    i.checkmark.icon
+                    | tasks
+                a.item(href='/student_development' class="{{isActivePath '/student_development'}}" title='home')
+                    i.line.chart.icon
+                    | development
+                a.item(href='/student_mail' class="{{isActivePath '/student_mail'}}" title='mail')
+                    i.chat.icon
+                    | mail
+                a.item(href='/student_profile' class="{{isActivePath '/student_profile'}}" title='profile')
+                    i.user.outline.icon
+                    | profile
+            
+        if in_role 'teacher'
+            .ui.bottom.fixed.six.item.menu
+                a.icon.item(href='/student_home' class="{{isActivePath '/student_home'}}" title='home')
+                    i.home.icon
+                a.icon.item(href='/student_schedule' class="{{isActivePath '/student_schedule'}}" title='clients')
+                    i.database.icon
+                a.icon.item(href='/teacher_students' class="{{isActivePath '/teacher_students'}}" title='tasks')
+                    i.users.icon
+                a.icon.item(href='/student_development' class="{{isActivePath '/student_development'}}" title='home')
+                    i.building.icon
+                a.icon.item(href='/student_mail' class="{{isActivePath '/student_mail'}}" title='mail')
+                    i.chat.icon
+                a.icon.item(href='/student_profile' class="{{isActivePath '/student_profile'}}" title='profile')
+                    i.user.outline.icon
+            
+            
+
+template(name='footer')
+    .ui.stackable.padded.grid.secondary.segment.mobile.hidden
+        .row
+            .four.wide.column
+                //- .ui.link.large.list
+                //-     a.item(href='/p/about')
+                //-         | what is dao?
+                //-     //- a.item(href='/prime')
+                //-     //-     | forest prime
+                //-     a.item(href="/p/terms") 
+                //-         | terms of service
+                //-     a.item(href="/p/privacy") 
+                //-         | privacy policy
+                //-     //- a.item(href='/sponsor') 
+                //-     //-     | sponsor
+            .four.wide.column
+                .ui.selection.animated.list
+                    if is_admin
+                        a.item(href='/m/model' class="{{isActivePath '/m/model'}}")
+                            i.database.icon
+                            |models
+                    a.icon.item(href='/m/internship' class="{{isActivePath '/m/internship'}}")
+                        +icon name='work' classes='ui avatar image'
+                        |internships
+                    a.icon.item(href='/m/business' class="{{isActivePath '/m/business'}}")
+                        +icon name='business' classes='ui avatar image'
+                        |businesses
+                    a.icon.item(href='/m/event' class="{{isActivePath '/m/event'}}")
+                        +icon name='calendar' classes='ui avatar image'
+                        |events
+                    a.icon.item(href='/m/message' class="{{isActivePath '/m/message'}}")
+                        +icon name='chat' classes='ui avatar image'
+                        |mail
+                    a.icon.item(href='/m/alert' class="{{isActivePath '/m/alert'}}")
+                        //- i.bell.icon(class=alert_icon_class)
+                        i.rss.icon
+                        |alerts
+                if currentUser
+                    .ui.link.large.list
+                        a.item(href='/users')
+                            i.users.icon
+                            | users
+                unless currentUser
+                    .ui.link.large.list
+                        a.item(href='/login')
+                            |login
+
+
+
+            .four.wide.column
+
+                //- +footer_chat
+                //- if is_admin
+                with currentUser
+                    +role_switcher
+            .four.wide.column
+                +bug_reporter 
+                .ui.grey.small.header    
+                    i.copyright.outline.icon 
+                    |2020 vulcan technologies, llc
+            //- 
+template(name='footer_chat')
+    a.ui.grey.header(href="/chat")
+        i.chat.outline.small.icon
+        |chat
+        //- .scroll
+    .ui.comments
+        each chat_messages
+            .comment(title="by #{_author_username} #{when}")
+                //- if author.image_id
+                //-     img.ui.avatar.image(src="{{c.url author.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                .content
+                    a.author #{_author_username}
+                    .metadata
+                        span.date #{when}
+                    .text
+                        |#{text}
+                if is_author
+                    span
+                        i.remove.link.icon.remove_message
+    .ui.bottom.attached.fluid.icon.transparent.input
+        i.plus.icon
+        input.new_footer_chat_message(type='text' placeholder='add message')
+
+
+template(name='bug_reporter')
+    a.ui.small.grey.header.start_report(href="#")
+        i.bug.small.icon
+        |report bug
+    if reporting_bug
+        with new_bug
+            |#{pathname}
+            +text_edit key='text' direct=true
+            .ui.icon.fluid.button.submit_report
+                i.checkmark.icon
+            .ui.small.icon.button.cancel_bug
+                i.remove.icon
+
+
+
+
+template(name='my_latest_activity')
+    .ui.grey.header 
+        i.grey.rss.icon
+        |your activity
+    .ui.list
+        each my_latest_activity
+            .item 
+                img.ui.avatar.image(src="{{c.url author.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                |#{text} #{body}
+                small #{when}
+
+
+
+template(name='role_switcher')
+    //- .ui.inline.center.aligned.small.grey.header 
+    //-     |#{username} role switcher
+    //- if is_eric
+    //-     +multi_doc key='roles' label='roles' ref_model='role' direct=true
+    //-     div
+        //- +user_array_element_toggle key='roles' value='dev' user=currentUser
+    //- if current_user
+    //-     with current_user
+    //- else if currentUser
+    //-     with currentUser
+    //- +multi_doc_edit key='roles' label='roles' ref_model='role' direct=true
+    //- if is_admin
+        //- +multi_doc_edit key='roles' label='current roles' ref_model='role' direct=true
+    //- +user_array_element_toggle key='roles' value='admin' user=currentUser
+    //- +user_array_element_toggle key='roles' value='staff' user=currentUser
+    if is_dev
+        //- +user_array_element_toggle key='roles' value='dev' user=currentUser
+        +user_array_element_toggle key='roles' value='admin' user=currentUser
+    +user_array_element_toggle key='roles' value='student' user=currentUser
+    +user_array_element_toggle key='roles' value='business' user=currentUser
+    +user_array_element_toggle key='roles' value='teacher' user=currentUser
+    //- +user_array_element_toggle key='roles' value='parent' user=currentUser

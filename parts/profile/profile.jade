@@ -1,0 +1,112 @@
+template(name='profile_layout')
+    //- img.ui.fluid.image.home_banner(src="{{c.url 'nightbg' width=1000 height=1000 crop='crop'}}")    
+    +nav
+    with user
+        .ui.stackable.padded.grid
+            .four.wide.column
+                img.ui.centered.small.rounded.profile_image.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                .ui.center.aligned.cricular.segment
+                    a(href="/user/#{username}")
+                        .ui.center.aligned.inline.header
+                            | #{user.first_name} #{user.last_name}
+                        //- div
+                        //- .ui.small.inline.header @#{user.username}  
+                a.ui.large.fluid.cricular.button(href="/user/#{username}/edit")
+                    i.cog.icon
+                    |account
+                a.ui.fluid.cricular.button.logout(href="#")
+                    i.sign.out.alternate.icon
+                    |log out
+                a.ui.fluid.cricular.button.logout_other_clients(href="#")
+                    //- i.globe.icon
+                    |log out other clients
+                if is_admin
+                    .ui.cricular.segment
+                        .ui.header 
+                            i.grey.shield.small.icon
+                            |roles
+                        each roles
+                            .ui.cricular.label #{this}
+                      
+            .twelve.wide.column
+                a.ui.cricular.button(href="/user/#{username}/dashboard" class="{{isActivePath regex='user_dashboard'}}")
+                    +icon name='dashboard' cl='ui inline mini image'
+                    |dashboard
+                a.ui.cricular.button(href="/user/#{username}/about" class="{{isActivePath regex=user_about}}")
+                    +icon name='info' cl='ui inline mini image'
+                    |about
+
+                a.ui.cricular.button(href="/user/#{username}/events" class="{{isActivePath regex='user_events'}}")
+                    +icon name='calendar' cl='ui inline mini image'
+                    |events
+                //- a.ui.cricular.button(href="/user/#{username}/mentorship" class="{{isActivePath regex=user_mentorship}}")
+                //-     |mentorship
+                //- a.ui.cricular.button(href="/user/#{username}/tutoring" class="{{isActivePath regex='user_tutoring'}}")
+                //-     i.grey.chalkboard.icon
+                //-     |tutoring
+                a.ui.cricular.button(href="/user/#{username}/internships" class="{{isActivePath regex='user_internships'}}")
+                    +icon name='work' cl='ui inline mini image'
+                    |internships
+                a.ui.cricular.button(href="/user/#{username}/awards" class="{{isActivePath regex=user_awards}}")
+                    +icon name='prize' cl='ui inline mini image'
+                    |awards
+                a.ui.cricular.button(href="/user/#{username}/friends" class="{{isActivePath regex='user_friends'}}")
+                    +icon name='groups' cl='ui inline mini image'
+                    |friends
+                a.ui.cricular.button(href="/user/#{username}/messages" class="{{isActivePath regex='user_messages'}}")
+                    +icon name='chat' cl='ui inline mini image'
+                    |messages
+                //- if is_current_user
+                //- +user_friend_button            
+                //- each user_sections
+                //-     a.ui.button(href="/user/#{username}/#{slug}")
+                //-         i.icon(class=icon)
+                //-         |#{title}
+                +yield    
+    +footer
+
+
+
+template(name='user_dashboard')             
+    .ui.center.aligned.header 
+        +icon name='dashboard'
+        |dashboard
+    .ui.stackable.padded.grid
+        .row
+            .five.wide.column
+                .ui.segment
+                    .ui.header 
+                        +icon name='work'
+                        |internships
+                .spacer    
+            .five.wide.column
+                .ui.segment
+                    .ui.header 
+                        +icon name='bookmark'
+                        |bookmarks
+                .spacer    
+            .five.wide.column
+                .ui.segment
+                    .ui.header 
+                        +icon name='chat'
+                        |messages
+                .spacer    
+            .five.wide.column
+                .ui.segment
+                    .ui.header 
+                        +icon name='chat'
+                        |messages
+                .spacer    
+                    
+        .three.column.row
+
+
+
+
+template(name='user_alerts_small')
+    .ui.header 
+        i.bell.small.icon
+        |alerts
+    .ui.list
+        each alerts 
+            .ui.item #{content}

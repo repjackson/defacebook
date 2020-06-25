@@ -1,0 +1,149 @@
+template(name='user_badges')
+    .ui.grey.inline.center.aligned.header 
+        i.people.carry.icon
+        | badges
+    .ui.middle.aligned.selection.animated.large.list
+        each badges
+            +user_segment
+    .ui.segment.profile_block
+        .ui.inline.center.aligned.header 
+            i.badge.icon
+            | badges
+        .ui.link.items
+            each badges
+                +award
+    .ui.header nonbadges    
+    each nonbadges
+        +user_segment
+
+
+template(name='user_tutoring')
+    with current_user
+        .ui.center.aligned.header 
+            i.chalkboard.icon
+            | tutoring
+        .ui.stackable.grid
+            .three.column.row
+                .column
+                    .ui.header tutoring sessions
+                    each tutor_sessions
+                        .ui.segment
+                            .ui.header #{when}
+                            .ui.header #{start_timedate}
+                            .ui.header #{end_timedate}
+                            +user_info author
+                            if is_author 
+                                +remove_button
+                .column
+                    .ui.header students
+                    each students 
+                        .ui.segment
+                            .ui.header #{name}
+        
+
+template(name='user_groups')
+    .ui.center.aligned.header 
+        i.users.icon
+        | groups
+
+
+
+template(name='user_events')
+    .ui.inline.header 
+        i.calendar.icon
+        |events
+    unless tutor_sessions.length 
+        |no tutor sessions
+    each tutor_sessions 
+        .ui.header #{title}
+    div
+    if is_current_user 
+        .ui.button.new_slot
+            i.plus.icon
+            |slot
+    each slots 
+        .ui.segment
+            .ui.header 
+                small from {{long_date start_timedate}}
+            .ui.header 
+                small to {{long_date end_datetime}}
+            .ui.list 
+                .item #{bids}
+            if closed 
+                .ui.green.label closed
+            else 
+                .ui.label open
+            a.ui.button(href='/m/slot/#{_id}/view')
+                |view
+    
+
+template(name='user_internships')
+    .ui.inline.header 
+        i.calendar.icon
+        |internships
+    unless internships.length 
+        |no tutor sessions
+    each internships 
+        .ui.header #{title}
+    div
+    .ui.header applications
+    each applications
+        .ui.segment
+            .ui.header 
+                small from {{long_date _timestamp}}
+            if closed 
+                .ui.green.label closed
+            else 
+                .ui.label open
+            a.ui.button(href='/m/slot/#{_id}/view')
+                |view
+    
+
+
+
+template(name='user_friends')
+    .ui.center.aligned.header 
+        i.people.carry.icon
+        | friends
+    +user_friend_button
+    .ui.middle.aligned.selection.animated.large.list
+        each friends
+            +user_segment
+
+
+
+template(name='user_segment')
+    a.item(href="/user/#{username}")
+        img.ui.avatar.image(src="{{c.url profile_image_id gravity='face' crop='fit'}}")
+        .content
+            .header
+                |#{name}
+            .description
+                each tags
+                    .ui.basic.label #{this}
+
+    //- .ui.horizontal.card
+    //-     .image
+    //-         if image_id
+    //-             img(src="{{c.url image_id gravity='face' crop='crop'}}")
+    //-     .content
+    //-         a.ui.header(href="/user/#{username}")
+    //-             |#{first_name} #{last_name}
+    //-             //- |#{username}
+    //-         //- .ui.header Tags
+    //-         each tags
+    //-             .ui.basic.label #{this}
+    //-         +user_status user
+    //-         .ui.header #{body}
+    //-         +user_friend_button
+template(name='user_friend_button')
+    if is_friend
+        .ui.blue.fade.animated.button.unfriend
+            .visible.content
+                |friend
+            .hidden.content
+                i.minus.icon
+    else
+        .ui.basic.button.friend
+            i.plus.icon
+            |friend

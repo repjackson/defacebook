@@ -11,6 +11,20 @@ Template.registerHelper 'emotion_selector_class', () ->
         'orange invert'
     else if @title is 'fear'
         'grey invert'
+
+
+Template.registerHelper 'in_role', (role)->
+    if Meteor.user() and Meteor.user().roles
+        if role in Meteor.user().roles
+            true
+        else
+            false
+    else
+        false
+
+
+
+
 Template.registerHelper 'sentence_class', () ->
     # console.log @
     if @tones.length

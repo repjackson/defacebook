@@ -29,12 +29,14 @@ template(name='home')
                             .header 
                                 |pages
             .twelve.wide.column
-                .ui.rounded.segment
-                    .ui.header post
-                    //- .ui.big.circular.icon.button.add_post
-                    //-     i.plus.icon
-                    .ui.fluid.big.input
-                        input#add_post(type='text' placeholder='add...')
+                if currentUser
+                    .ui.rounded.segment
+                        //- .ui.header post
+                        //- .ui.big.circular.icon.button.add_post
+                        //-     i.plus.icon
+                        .ui.fluid.big.left.icon.input
+                            i.plus.icon
+                            input#add_post(type='text' placeholder='add...')
                 .scrolling
                     each posts
                         +post_item
