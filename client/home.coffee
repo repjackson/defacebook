@@ -9,92 +9,28 @@ Template.admin.helpers
         Docs.find().count()
 
 
-Template.agg_tag.onCreated ->
-    # console.log @
-    @autorun => @subscribe 'term', @data.title
 
 Template.home.onCreated ->
-    Session.setDefault('current_query', '')
-    Session.setDefault('dummy', true)
-    @autorun => @subscribe 'terms',
-        selected_tags.array()
-    @autorun => @subscribe 'tag_results',
-        selected_tags.array()
-        selected_subreddits.array()
-        selected_domains.array()
-        selected_authors.array()
-        selected_emotions.array()
-        Session.get('current_query')
-        Session.get('dummy')
-        Session.get('date_setting')
-    @autorun => @subscribe 'doc_results',
-        selected_tags.array()
-        selected_subreddits.array()
-        selected_domains.array()
-        selected_authors.array()
-        selected_emotions.array()
-        Session.get('date_setting')
+    @autorun => @subscribe 'posts'
+    # @autorun => @subscribe 'terms',
+    #     selected_tags.array()
+    # @autorun => @subscribe 'tag_results',
+    #     selected_tags.array()
+    #     selected_subreddits.array()
+    #     selected_domains.array()
+    #     selected_authors.array()
+    #     selected_emotions.array()
+    #     Session.get('current_query')
+    #     Session.get('dummy')
+    #     Session.get('date_setting')
+    # @autorun => @subscribe 'doc_results',
+    #     selected_tags.array()
+    #     selected_subreddits.array()
+    #     selected_domains.array()
+    #     selected_authors.array()
+    #     selected_emotions.array()
+    #     Session.get('date_setting')
 
-Template.tone.events
-    # 'click .upvote_sentence': ->
-    'click .tone_item': ->
-        # console.log @
-        doc_id = Docs.findOne()._id
-        if @weight is 3
-            Meteor.call 'reset_sentence', doc_id, @, ->
-        else
-            Meteor.call 'upvote_sentence', doc_id, @, ->
-
-Template.agg_tag.helpers
-    term: ->
-        # console.log @
-        Terms.findOne
-            title:@title
-    tag_result_class: ->
-        # console.log 'active_term class', @
-        term =
-            Terms.findOne title:@title
-        if term
-            # console.log 'found term emotion', term
-            if term.max_emotion_name
-                if term.max_emotion_name is 'anger'
-                    'red invert'
-                else if term.max_emotion_name is 'sadness'
-                    'blue invert'
-                else if term.max_emotion_name is 'joy'
-                    'green invert'
-                else if term.max_emotion_name is 'disgust'
-                    'orange invert'
-                else if term.max_emotion_name is 'fear'
-                    'grey invert'
-
-
-Template.agg_tag.events
-    'click .result': (e,t)->
-        Meteor.call 'log_term', @title, ->
-        selected_tags.push @title
-
-        $('#search').val('')
-        Meteor.call 'call_wiki', @title, ->
-        Meteor.call 'calc_term', @title, ->
-        Meteor.call 'omega', @title, ->
-        Session.set('current_query', '')
-        Session.set('searching', false)
-
-        Meteor.call 'search_reddit', selected_tags.array(), ->
-        # Meteor.setTimeout ->
-        #     Session.set('dummy', !Session.get('dummy'))
-        # , 7000
-    # 'click .call_visual': ->
-    #     Meteor.call 'call_visual', @_id, (err,res)->
-    #         console.log res
-
-    'click .select_query': ->
-        selected_tags.push @title
-        Meteor.call 'search_reddit', selected_tags.array(), ->
-        $('#search').val('')
-        Session.set('current_query', '')
-        Session.set('searching', false)
 
 Template.home.events
     'click .set_today': -> Session.set('date_setting','today')
@@ -165,6 +101,25 @@ Template.home.events
                 #     Session.set('dummy', !Session.get('dummy'))
                 # , 6000
     # , 200)
+    'keydown #add_post': (e,t)->
+        post = $('#add_post').val()
+        # Session.set('current_query', query)
+        # if query.length > 0
+        #     Session.set('searching', true)
+        # else
+        #     Session.set('searching', false)
+        # if query.length > 0
+        # console.log Session.get('current_query')
+        if e.which is 13
+            post = $('#add_post').val().trim().toLowerCase()
+            if post.length > 0
+                console.log 'post', post
+                Docs.insert
+                    model:'post'
+                    title:post
+                # Meteor.call 'call_wiki', search, =>
+                #     Meteor.call 'calc_term', @title, ->
+                #     Meteor.call 'omega', @title, ->
 
     # 'keydown #search': _.throttle((e,t)->
     #     if e.which is 8
@@ -235,6 +190,12 @@ Template.home.events
 
 
 Template.home.helpers
+    posts: ->
+        Docs.find {
+            model:'post'
+        },
+            sort:
+                _timestamp:-1
     active_term_class: ->
         # console.log 'active_term class', @
         term =

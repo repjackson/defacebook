@@ -14,6 +14,14 @@ Meteor.publish 'doc', (doc_id)->
     Docs.find
         _id:doc_id
 
+Meteor.publish 'posts', ()->
+    Docs.find {
+        model:'post'
+    },
+        limit:10
+        sort:
+            _timestamp:-1
+
 Meteor.publish 'term', (title)->
     Terms.find
         title:title
