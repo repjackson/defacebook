@@ -1,29 +1,36 @@
 template(name='nav')
-    .ui.fluid.attached.borderless.inverted.big.blue.menu
-        a.header.item(href="/")
-            | d
-            .ui.white.large.inverted.header f
-            |b
+    .ui.fluid.attached.borderless.inverted.blue.menu
+        a.item(href="/")
+            .ui.compacted.header
+                small.small_letter d
+                strong.big_f f
+                small.small_letter b
+            //- |b
             //- |efacebook
         .item 
             .ui.input 
                 input(type='text' placeholder='search...')
-        a.icon.item 
-            i.shop.icon
-        a.icon.item 
-            i.users.icon
-        a.icon.item 
-            i.users.icon
+        //- a.disabled.item(href="/marketplace")
+        //-     //- i.shop.icon
+        //-     +icon name='shop' cl='ui mini image'
+        a.item(href="/users")
+            //- i.users.icon
+            +icon name='groups' cl='ui mini spaced image'
+            strong users
+        a.item(href="/groups")
+            //- i.circular.users.icon
+            +icon name='meeting-room' cl='ui mini spaced image'
+            strong groups
         .right.menu
             if currentUser
                 a.icon.item
-                    i.plus.icon
+                    i.plus.large.icon
                 a.icon.item
-                    i.chat.icon
+                    i.chat.large.icon
                 a.icon.item
-                    i.bell.icon
+                    i.bell.large.icon
                 a.item(href="/user/#{currentUser.username}")
-                    i.user.icon
+                    i.user.large.icon
                     |#{currentUser.username}
             else
                 a.item(href="/login")
@@ -144,19 +151,25 @@ template(name='footer')
                         a.item(href='/m/model' class="{{isActivePath '/m/model'}}")
                             i.database.icon
                             |models
-                    a.icon.item(href='/m/internship' class="{{isActivePath '/m/internship'}}")
-                        +icon name='work' classes='ui avatar image'
-                        |internships
-                    a.icon.item(href='/m/business' class="{{isActivePath '/m/business'}}")
-                        +icon name='business' classes='ui avatar image'
-                        |businesses
-                    a.icon.item(href='/m/event' class="{{isActivePath '/m/event'}}")
-                        +icon name='calendar' classes='ui avatar image'
+                    //- a.icon.item(href='/m/internship' class="{{isActivePath '/m/internship'}}")
+                    //-     +icon name='work' cl='ui avatar image'
+                    //-     |internships
+                    //- a.icon.item(href='/m/business' class="{{isActivePath '/m/business'}}")
+                    //-     +icon name='business' cl='ui avatar image'
+                    //-     |businesses
+                    a.item(href='/users' class="{{isActivePath '/users'}}")
+                        +icon name='groups' cl='ui avatar image'
+                        |users
+                    a.item(href='/groups' class="{{isActivePath '/groups'}}")
+                        +icon name='meeting-room' cl='ui avatar image'
+                        |groups
+                    a.item(href='/m/event' class="{{isActivePath '/m/event'}}")
+                        +icon name='calendar' cl='ui avatar image'
                         |events
-                    a.icon.item(href='/m/message' class="{{isActivePath '/m/message'}}")
-                        +icon name='chat' classes='ui avatar image'
+                    a.item(href='/chat' class="{{isActivePath '/chat'}}")
+                        +icon name='chat' cl='ui avatar image'
                         |mail
-                    a.icon.item(href='/m/alert' class="{{isActivePath '/m/alert'}}")
+                    a.item(href='/m/alert' class="{{isActivePath '/m/alert'}}")
                         //- i.bell.icon(class=alert_icon_class)
                         i.rss.icon
                         |alerts
@@ -182,7 +195,7 @@ template(name='footer')
                 +bug_reporter 
                 .ui.grey.small.header    
                     i.copyright.outline.icon 
-                    |2020 vulcan technologies, llc
+                    |2020 defacebook
             //- 
 template(name='footer_chat')
     a.ui.grey.header(href="/chat")
