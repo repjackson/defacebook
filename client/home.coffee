@@ -1,33 +1,32 @@
 @selected_tags = new ReactiveArray []
 @selected_authors = new ReactiveArray []
+@selected_subreddits = new ReactiveArray []
+@selected_domains = new ReactiveArray []
 @selected_emotions = new ReactiveArray []
-
-Template.admin.helpers
-    doc_count: ->
-        Docs.find().count()
-
 
 
 Template.home.onCreated ->
-    @autorun => @subscribe 'posts'
-    # @autorun => @subscribe 'terms',
-    #     selected_tags.array()
-    # @autorun => @subscribe 'tag_results',
-    #     selected_tags.array()
-    #     selected_subreddits.array()
-    #     selected_domains.array()
-    #     selected_authors.array()
-    #     selected_emotions.array()
-    #     Session.get('current_query')
-    #     Session.get('dummy')
-    #     Session.get('date_setting')
-    # @autorun => @subscribe 'doc_results',
-    #     selected_tags.array()
-    #     selected_subreddits.array()
-    #     selected_domains.array()
-    #     selected_authors.array()
-    #     selected_emotions.array()
-    #     Session.get('date_setting')
+    # @autorun => @subscribe 'posts'
+    # @autorun => @subscribe 'posts'
+    Session.setDefault('current_query','')
+    @autorun => @subscribe 'terms',
+        selected_tags.array()
+    @autorun => @subscribe 'tag_results',
+        selected_tags.array()
+        selected_subreddits.array()
+        selected_domains.array()
+        selected_authors.array()
+        selected_emotions.array()
+        Session.get('current_query')
+        Session.get('dummy')
+        Session.get('date_setting')
+    @autorun => @subscribe 'doc_results',
+        selected_tags.array()
+        selected_subreddits.array()
+        selected_domains.array()
+        selected_authors.array()
+        selected_emotions.array()
+        Session.get('date_setting')
 
 
 
@@ -290,7 +289,7 @@ Template.home.helpers
         )
     selected_domains: -> selected_domains.array()
 
-    agg_tags: ->
+    tag_results: ->
         # console.log Session.get('current_query')
         # if Session.get('current_query')
         if Session.get('searching')

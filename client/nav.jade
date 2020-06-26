@@ -10,17 +10,17 @@ template(name='nav')
         .item 
             .ui.input 
                 input(type='text' placeholder='search...')
-        //- a.disabled.item(href="/marketplace")
-        //-     //- i.shop.icon
-        //-     +icon name='shop' cl='ui mini image'
-        a.item(href="/users")
+        a.icon.item(href="/shop")
+            //- i.shop.icon
+            +icon name='shop' cl='ui mini image'
+        a.icon.item(href="/users")
             //- i.users.icon
             +icon name='groups' cl='ui mini spaced image'
-            strong users
-        a.item(href="/groups")
+            //- strong users
+        a.icon.item(href="/groups")
             //- i.circular.users.icon
             +icon name='meeting-room' cl='ui mini spaced image'
-            strong groups
+            //- strong groups
         .right.menu
             if currentUser
                 a.icon.item

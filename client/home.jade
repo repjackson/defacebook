@@ -2,28 +2,33 @@ template(name='home')
     .ui.stackable.padded.grid
         .row
             .four.wide.column
-                .ui.big.selection.link.animated.grey.list
-                    .item
+                .ui.big.selection.link.grey.list
+                    a.item(href="/users")
                         +icon name='groups' cl='avatar'
                         .content
                             .header 
                                 |friends
-                    .item
+                    a.item(href="/messenger")
                         +icon name='chat' cl='avatar'
                         .content
                             .header 
                                 |messenger
-                    .item
+                    a.item(href="/groups")
+                        +icon name='meeting-room' cl='avatar'
+                        .content
+                            .header 
+                                |groups
+                    a.item(href="/events")
                         +icon name='calendar' cl='avatar'
                         .content
                             .header 
                                 |events
-                    .item
+                    a.disabled.item(href="/marketplace")
                         +icon name='shop' cl='avatar'
                         .content
                             .header 
                                 |marketplace
-                    .item
+                    a.disabled.item(href="/pages")
                         +icon name='flag' cl='avatar'
                         .content
                             .header 
@@ -37,9 +42,12 @@ template(name='home')
                         .ui.fluid.big.left.icon.input
                             i.plus.icon
                             input#add_post(type='text' placeholder='add...')
+                each tag_results
+                    .ui.button #{title}
                 .scrolling
-                    each posts
+                    each doc_results
                         +post_item
+                    //- each posts
                     
 template(name='agg_tag')
     button.ui.tertiary.large.button.result(tabindex="0" title=count)

@@ -6,8 +6,8 @@ body {
     /* font-size: 110% !important; */
     /* line-height: 200% !important; */
     /* background: rgba(0,0,0,.08) !important; */
-    background: rgba(0,0,0,.8) !important;
     filter: invert(1) !important;
+    background: rgba(0,0,0,.8) !important;
     /* overscroll-behavior: none; */
     transition: all 1s ease !important;
     /* background: rgba(250, 250, 250, .05) !important */
@@ -16,11 +16,16 @@ body {
 
 .compacted{
     letter-spacing: -3px;
+    color: white !important;
+    margin-bottom: -5px !important;
+    /* vertical-align: -5px !important; */
 }
 
 .big_f{
     font-size: 200% !important;
-    /* vertical-align: 20px !important; */
+    color: white !important;
+    margin-bottom: -5px !important;
+    /* vertical-align: -5px !important; */
 }
 
 .small_letter{
